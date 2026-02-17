@@ -60,10 +60,13 @@ export async function GET() {
 
     const csvContent = [csvHeaders, ...csvRows].join('\n')
 
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
+    const filename = `trades_${timestamp}.csv`
+
     return new NextResponse(csvContent, {
         headers: {
             'Content-Type': 'text/csv',
-            'Content-Disposition': 'attachment; filename="trades.csv"',
+            'Content-Disposition': `attachment; filename="${filename}"`,
         },
     })
 }
