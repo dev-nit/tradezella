@@ -13,7 +13,7 @@ export default function WelcomePage() {
             </div>
 
             <div className="space-y-4">
-                <h1 className="text-4xl font-bold">Welcome to TradeZella</h1>
+                <h1 className="text-4xl font-bold">Welcome to NS Trade</h1>
                 <p className="text-xl text-muted-foreground">The only tool you need to become a profitable trader.</p>
             </div>
 

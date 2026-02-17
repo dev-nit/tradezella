@@ -12,6 +12,7 @@ import {
     LogOut
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ModeToggle } from '@/components/mode-toggle'
 
 const sidebarItems = [
     {
@@ -49,7 +50,7 @@ export function DashboardSidebar({ className, onNavigate, ...props }: DashboardS
             <div className="p-6 border-b">
                 <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl" onClick={onNavigate}>
                     <LayoutDashboard className="h-6 w-6 text-primary" />
-                    <span>TradeZella</span>
+                    <span>NS Trade</span>
                 </Link>
             </div>
 
@@ -72,7 +73,11 @@ export function DashboardSidebar({ className, onNavigate, ...props }: DashboardS
                 </nav>
             </div>
 
-            <div className="p-4 border-t">
+            <div className="p-4 border-t space-y-4">
+                <div className="flex items-center justify-between px-2">
+                    <span className="text-sm font-medium">Theme</span>
+                    <ModeToggle />
+                </div>
                 <form action="/auth/signout" method="post">
                     <Button variant="ghost" className="w-full justify-start gap-3 text-red-500 hover:text-red-600 hover:bg-red-50">
                         <LogOut className="h-4 w-4" />
@@ -83,4 +88,5 @@ export function DashboardSidebar({ className, onNavigate, ...props }: DashboardS
         </div>
     )
 }
+
 

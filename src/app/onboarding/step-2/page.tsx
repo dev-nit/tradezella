@@ -8,7 +8,7 @@ export default function Step2Page() {
     return (
         <div className="w-full max-w-2xl space-y-8 text-center">
             <div className="space-y-2">
-                <h1 className="text-3xl font-bold">What are you looking to do with TradeZella?</h1>
+                <h1 className="text-3xl font-bold">What are you looking to do with NS Trade?</h1>
                 <p className="text-muted-foreground">Select all that apply</p>
             </div>
 

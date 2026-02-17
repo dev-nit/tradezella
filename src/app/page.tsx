@@ -38,7 +38,7 @@ export default function Home() {
                   </span>
                 </h1>
                 <p className="text-xl text-slate-600 max-w-[600px] leading-relaxed">
-                  TradeZella reveals the metrics and behavioral patterns that actually drive your results. Stop guessing, start improving.
+                  NS Trade reveals the metrics and behavioral patterns that actually drive your results. Stop guessing, start improving.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <Link href="/signup">
