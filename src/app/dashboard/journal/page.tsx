@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table'
 import { Filter } from 'lucide-react'
 import { AddTradeButton } from './_components/AddTradeButton'
+import { ExportTradesButton } from './_components/ExportTradesButton'
 import { TradeTableRow } from './_components/TradeTableRow'
 
 import { createClient } from '@/lib/supabase/server'
@@ -38,6 +39,7 @@ export default async function JournalPage() {
                     <p className="text-muted-foreground">Review your past trades and analyze your performance.</p>
                 </div>
                 <div className="flex gap-2">
+                    <ExportTradesButton />
                     <Button variant="outline">
                         <Filter className="mr-2 h-4 w-4" />
                         Filter

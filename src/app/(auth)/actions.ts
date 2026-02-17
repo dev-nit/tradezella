@@ -1,6 +1,7 @@
 
 'use server'
 
+import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
@@ -27,6 +28,7 @@ export async function login(formData: FormData) {
 
 export async function signup(formData: FormData) {
     const supabase = await createClient()
+    const origin = (await headers()).get('origin')
 
     // Type assertion for form data as it is valid to be passed in
     const email = formData.get('email') as string
@@ -36,7 +38,7 @@ export async function signup(formData: FormData) {
         email,
         password,
         options: {
-            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`,
+            emailRedirectTo: `${origin}/auth/callback`,
         },
     })
 

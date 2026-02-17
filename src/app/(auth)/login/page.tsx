@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { login } from '../actions'
 import { Button } from '@/components/ui/button'
+import { SubmitButton } from '../_components/SubmitButton'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -27,7 +28,7 @@ export default function LoginPage() {
                     </div>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
-                    <Button className="w-full">Sign in</Button>
+                    <SubmitButton className="w-full">Sign in</SubmitButton>
                     <div className="text-center text-sm">
                         Don&apos;t have an account?{' '}
                         <Link href="/signup" className="underline">
