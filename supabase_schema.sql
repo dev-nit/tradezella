@@ -1,0 +1,71 @@
+
+-- Create a table for public profiles
+create table profiles (
+  id uuid references auth.users on delete cascade not null primary key,
+  updated_at timestamp with time zone,
+  username text unique,
+  full_name text,
+  avatar_url text,
+  website text,
+  constraint username_length check (char_length(username) >= 3)
+);
+
+-- Set up Row Level Security (RLS)
+-- See https://supabase.com/docs/guides/auth/row-level-security for more details.
+alter table profiles enable row level security;
+
+create policy "Public profiles are viewable by everyone." on profiles
+  for select using (true);
+
+create policy "Users can insert their own profile." on profiles
+  for insert with check ((select auth.uid()) = id);
+
+create policy "Users can update own profile." on profiles
+  for update using ((select auth.uid()) = id);
+
+-- Create a table for trades
+create table trades (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users not null,
+  symbol text not null,
+  entry_price numeric,
+  exit_price numeric,
+  quantity numeric,
+  direction text check (direction in ('LONG', 'SHORT')),
+  status text check (status in ('OPEN', 'CLOSED', 'PENDING')),
+  pnl numeric,
+  entry_date timestamp with time zone default now(),
+  exit_date timestamp with time zone,
+  notes text,
+  created_at timestamp with time zone default now(),
+  updated_at timestamp with time zone default now()
+);
+
+alter table trades enable row level security;
+
+create policy "Users can view own trades." on trades
+  for select using ((select auth.uid()) = user_id);
+
+create policy "Users can insert own trades." on trades
+  for insert with check ((select auth.uid()) = user_id);
+
+create policy "Users can update own trades." on trades
+  for update using ((select auth.uid()) = user_id);
+
+create policy "Users can delete own trades." on trades
+  for delete using ((select auth.uid()) = user_id);
+
+-- This trigger automatically creates a profile entry when a new user signs up via Supabase Auth.
+-- See https://supabase.com/docs/guides/auth/managing-user-data#using-triggers for more details.
+create function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, full_name, avatar_url)
+  values (new.id, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  return new;
+end;
+$$ language plpgsql security definer;
+
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
